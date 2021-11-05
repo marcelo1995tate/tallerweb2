@@ -8,6 +8,9 @@ module.exports = (sequelize, dataTypes) => {
         },
         ID_USUARIO: {
             type: dataTypes.INTEGER,
+        },
+        FECHA: {
+            type: dataTypes.DATE,
         }
 
     }
