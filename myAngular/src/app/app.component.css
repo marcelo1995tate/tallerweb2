@@ -1,0 +1,11 @@
+.button{
+    position: relative;
+    right: 30px;
+    background-color: transparent;
+    border: none;
+}
+
+.form{
+    width: calc(65% - 100px);
+    min-width: 175px;
+}
