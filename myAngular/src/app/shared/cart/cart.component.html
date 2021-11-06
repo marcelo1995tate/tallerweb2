@@ -1,0 +1,12 @@
+<form class="d-flex">
+    <button class="btn btn-outline-dark" type="submit">
+        <fa-icon [icon]="faShoppingCart"></fa-icon>
+        Carrito
+        <a href=""><span class="badge bg-dark text-white ms-1 rounded-pill"
+            *ngIf=" { quantity: quantity$ | async | json } as dataCart">
+            <ng-container *ngIf="dataCart.quantity">
+                {{ dataCart.quantity }}
+            </ng-container>
+        </span></a>
+    </button>
+</form>
