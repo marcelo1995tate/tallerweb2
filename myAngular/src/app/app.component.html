@@ -1,4 +1,30 @@
 <app-header></app-header>
-<div>
-  <router-outlet></router-outlet>
-</div>
+<style src="./../assets/js/main.js"></style>
+<header id="page-top" class="pt-5">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top py-1" id="mainNav">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand" href="#page-top">Taller II</a>
+          
+            <form class="d-flex form"> <input class="form-control mr-2 " type="search" placeholder="Buscar productos"
+                    aria-label="Search">
+                <button class="button" type="submit">
+                    <i class="fa fa-search "></i>
+                </button>
+            </form>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" routerLink="/login" routerLinkActive="active">Log in</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" routerLink="/register"
+                            routerLinkActive="active">Register</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<main>
+    <router-outlet></router-outlet>
+</main>

@@ -19,7 +19,8 @@ const controller = {
         });
     },
     create: (req, res) => {
-        db.Productos.create({ NOMBRE:req.body.NOMBRE,DESCRIPCION:req.body.DESCRIPCION,CLASIFICACION:req.body.DESCRIPCION,IMAGEN:req.body.IMAGEN,PRECIO:req.body.PRECIO})
+        
+        db.Productos.create({ NOMBRE:req.body.NOMBRE,DESCRIPCION:req.body.DESCRIPCION,CLASIFICACION:req.body.DESCRIPCION,IMAGEN:req.file.filename,PRECIO:req.body.PRECIO})
         res.send();
     },
 }
