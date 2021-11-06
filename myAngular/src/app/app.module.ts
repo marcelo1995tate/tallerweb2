@@ -27,7 +27,6 @@ import { RegisterComponent } from './Components/Usuario/Register/register.compon
         HttpClientModule,
         FontAwesomeModule,
         FormsModule,
-        FormGroup,
         ReactiveFormsModule
     ],
     providers: [],

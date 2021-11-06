@@ -1,6 +1,10 @@
-<app-header></app-header>
-<style src="./../assets/js/main.js"></style>
-<header id="page-top" class="pt-5">
+<div *ngIf="route == '/products' || route == '/order'; then productos else login"></div>
+<ng-template #productos>
+    <app-header></app-header>
+</ng-template>
+<ng-template #login>
+    <style src="./../assets/js/main.js"></style>
+    <header id="page-top" class="pt-5">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top py-1" id="mainNav">
         <div class="container-fluid px-4">
             <a class="navbar-brand" href="#page-top">Taller II</a>
@@ -25,6 +29,7 @@
         </div>
     </nav>
 </header>
+</ng-template>
 <main>
     <router-outlet></router-outlet>
 </main>
