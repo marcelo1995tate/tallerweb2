@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ProductsService } from "./services/product_service/products.service";
 import {Product} from "./interface/product.interface";
 import {CartService} from "./services/cart_service/cart.service";
@@ -7,7 +7,7 @@ import {tap} from "rxjs/operators";
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.css']
+  styleUrls: ['./products.component.css'],
 })
 export class ProductsComponent implements OnInit {
 

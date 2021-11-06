@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {faShoppingCart} from "@fortawesome/free-solid-svg-icons";
 import {CartService} from "../../pages/products/services/cart_service/cart.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-cart',

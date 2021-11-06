@@ -7,6 +7,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {HeaderComponent} from "./shared/header/header.component";
 import { CartComponent } from './shared/cart/cart.component';
+import { OrdersComponent } from './pages/orders/orders.component';
+
 
 
 
@@ -14,7 +16,8 @@ import { CartComponent } from './shared/cart/cart.component';
     declarations: [
         AppComponent,
         HeaderComponent,
-        CartComponent
+        CartComponent,
+        OrdersComponent,
     ],
     imports: [
         BrowserModule,
