@@ -10,12 +10,12 @@
                     <h2>Log In</h2>
                 </div>
                 <div class="row">
-                    <form control="" class="form-group">
+                    <form [formGroup]="signinForm" control="" class="form-group" (ngSubmit)="loguearse(signinForm.value)">
                         <div class="row">
-                            <input type="email" name="email" id="email" class="form__input" placeholder="E-Mail">
+                            <input formControlName="email" type="email" name="email" id="email" class="form__input" placeholder="E-Mail">
                         </div>
                         <div class="row">
-                            <input type="password" name="password" id="password" class="form__input" placeholder="Password">
+                            <input formControlName="password" type="password" name="password" id="password" class="form__input" placeholder="Password">
                         </div>
                         <div class="row">
                             <input type="submit" value="Log in" class="btn">

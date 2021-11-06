@@ -1,4 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 
@@ -9,7 +10,15 @@ import { FormsModule, NgForm } from '@angular/forms';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  constructor(protected router:Router) { }
+
+  signinForm: FormGroup;
+
+  constructor(protected router:Router, private _builder: FormBuilder) { 
+    this.signinForm = this._builder.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required]
+    })
+  }
 
   registrar(){
     this.router.navigate(['/register'])

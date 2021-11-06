@@ -20,7 +20,11 @@ const productsRouter = require('./routes/products');
 const orderRouter = require('./routes/orders');
 
 app.use('/products', productsRouter);
+
+app.use('/cognito', require('./routes/cognito.js'));
+
 app.use('/orders', orderRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
