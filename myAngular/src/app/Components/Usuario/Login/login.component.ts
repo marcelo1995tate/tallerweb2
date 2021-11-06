@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FormsModule, NgForm } from '@angular/forms';
+
 
 @Component({
   selector: 'login',
@@ -21,10 +23,7 @@ export class LoginComponent {
   registrar(){
     this.router.navigate(['/register'])
   }
-
-  signin(values: any){
-    console.log(values);
+  loguearse(data: any){
+    alert(data.email);
   }
-
-
 }

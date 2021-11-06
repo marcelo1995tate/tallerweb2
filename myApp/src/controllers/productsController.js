@@ -19,6 +19,11 @@ const controller = {
             res.json(resultados);
         });
     },
+    create: (req, res) => {
+        
+        db.Productos.create({ NOMBRE:req.body.NOMBRE,DESCRIPCION:req.body.DESCRIPCION,CLASIFICACION:req.body.DESCRIPCION,IMAGEN:req.file.filename,PRECIO:req.body.PRECIO})
+        res.send();
+    },
 }
 
 module.exports = controller;
