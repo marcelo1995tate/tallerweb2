@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HeaderComponent } from "./shared/header/header.component";
 import { CartComponent } from './shared/cart/cart.component';
-import { OrdersComponent } from './pages/orders/orders.component';
+import { OrdersComponent } from './Components/Productos/orders/orders.component';
 import { LoginComponent } from './Components/Usuario/Login/login.component';
 import { RegisterComponent } from './Components/Usuario/Register/register.component';
 
