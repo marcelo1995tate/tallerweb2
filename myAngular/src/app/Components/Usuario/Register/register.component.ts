@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ValidationService } from 'src/app/Services/Validation.service';
 
 @Component({
   selector: 'register',
@@ -8,21 +9,21 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 
 export class RegisterComponent {
-  
-  signupForm: FormGroup;
-  
-  constructor(private _builder: FormBuilder){
-    this.signupForm = this._builder.group({
-      email: ['', Validators.required] ,
-      password: ['', Validators.required] ,
-      nombre: ['', Validators.required] ,
-      apellido: ['', Validators.required] ,
-      direccion: ['', Validators.required] 
+
+  registerForm: any;
+
+  constructor(private _builder: FormBuilder) {
+    this.registerForm = this._builder.group({
+      email: ['', [Validators.required, ValidationService.emailValidator]],
+      password: ['', [Validators.required, ValidationService.passValidator, Validators.minLength(8)]],
+      nombre: ['', [Validators.required, ValidationService.textValidator]],
+      apellido: ['', [Validators.required, ValidationService.textValidator]],
+      direccion: ['', [Validators.required]]
     })
   }
 
-  enviar(values: any){
-    console.log(values);
+  enviar() {
+    console.log(this.registerForm);
   }
-  
+
 }

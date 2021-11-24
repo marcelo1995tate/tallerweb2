@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
+import { ValidationService } from 'src/app/Services/Validation.service';
 
 
 @Component({
@@ -11,11 +12,11 @@ import { FormsModule, NgForm } from '@angular/forms';
 })
 export class LoginComponent {
 
-  signinForm: FormGroup;
+  loginForm: any;
 
   constructor(protected router:Router, private _builder: FormBuilder) { 
-    this.signinForm = this._builder.group({
-      email: ['', Validators.required],
+    this.loginForm = this._builder.group({
+      email: ['', [Validators.required, ValidationService.emailValidator]],
       password: ['', Validators.required]
     })
   }
@@ -23,7 +24,7 @@ export class LoginComponent {
   registrar(){
     this.router.navigate(['/register'])
   }
-  loguearse(data: any){
-    alert(data.email);
+  loguearse(){
+    alert(this.loginForm.value.email);
   }
 }
