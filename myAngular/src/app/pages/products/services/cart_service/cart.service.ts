@@ -34,17 +34,24 @@ export class CartService{
   }
 
   private addToCart(product:Product): void{
-      this.products.push(product);
+      const isProductInCar = this.products.find(({ ID_PRODUCTO }) => ID_PRODUCTO === product.ID_PRODUCTO);
+
+      if(isProductInCar){
+          isProductInCar.CANTIDAD += 1;
+      }else{
+          this.products.push({...product, CANTIDAD:1})
+      }
+
       this.cartSubject.next(this.products);
   }
 
   private quantityProducts(): void{
-      const quantity = (this.products.length) ? this.products.length : 0 ;
+      const quantity = this.products.reduce((accumulator, prod) => accumulator += prod.CANTIDAD,0);
       this.quantitySubject.next(quantity);
   }
 
   private calculateTotal(): void{
-      const total = this.products.reduce((accumulator, prod) => accumulator += prod.PRECIO,0);
+      const total = this.products.reduce((accumulator, prod) => accumulator += (prod.PRECIO * prod.CANTIDAD),0);
       this.totalSubject.next(total);
   }
 
