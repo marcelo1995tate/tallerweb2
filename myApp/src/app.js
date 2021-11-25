@@ -18,10 +18,11 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 const productsRouter = require('./routes/products');
 const orderRouter = require('./routes/orders');
+const cognitoRouter = require('./routes/cognito');
 
 app.use('/products', productsRouter);
 
-app.use('/cognito', require('./routes/cognito.js'));
+app.use('/cognito', cognitoRouter);
 
 app.use('/orders', orderRouter);
 
