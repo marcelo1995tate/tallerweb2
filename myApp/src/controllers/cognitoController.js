@@ -17,7 +17,7 @@ exports.signIn = (req, res) => {
             Password: datos.password,
         });
 
-        var userData = {
+        let userData = {
             Username: datos.email,
             Pool: userPool
         };
@@ -69,6 +69,60 @@ exports.signUp = (req, res) => {
                 res.send('Te registraste correctamente, porfavor verifica tu correo');
             })
             
+    }catch(error){
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+}
+
+exports.forgotPassword = (req , res) => {
+    try{
+        let datos = req.body;
+
+        let userData = {
+            Username: datos.email,
+            Pool: userPool
+        };
+
+        let cognitoUser = new AmazonCognitoIdentify.CognitoUser(userData);
+        cognitoUser.forgotPassword({
+            onSuccess: function(result) {
+                console.log('call result: ' + result);
+                return res.send("Fue enviado el codigo para el recupero de contraseña");
+            },
+            onFailure: function(err){
+                console.log(err);
+                return res.send(err);
+            }
+
+        });
+    }catch(error){
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+}
+
+exports.confirmNewPassword = (req , res) => {
+    try{
+        let datos = req.body;
+
+        let userData = {
+            Username: datos.email,
+            Pool: userPool
+        };
+    
+        let cognitoUser = new AmazonCognitoIdentify.CognitoUser(userData);
+        cognitoUser.confirmPassword(datos.code , datos.newPassword , {
+            onSuccess: function(result){
+                console.log('call result: ' + result);
+                return res.send("Contraseña restablecida");
+    
+            },
+            onFailure: function(err){
+                console.log(err);
+                return res.send(err);
+            }
+        });
     }catch(error){
         console.log(error);
         res.status(500).send('Hubo un error');
