@@ -18,10 +18,31 @@ export class UsuarioService {
     return new Promise<Session>((resolve, reject) => {
       this.http.post<Session>('http://localhost:3000/cognito/sign-in', usuario).subscribe
         (value => {
+          
+          const resultado = value.toString();
+                    
+          if(resultado.includes("Exception")){
+            
+            value = {
+              IdToken:"",
+              Message:resultado.split(".")[1]
+            }
+
+          }else{
+            
+            value = {
+              IdToken:resultado,
+              Message:""
+            }
+          }
+          
           resolve(value);
+          
         }
         , error => {
           reject({ Message: this.parseError(error), IdToken: '' })
+          console.log(error);
+          
         });
     })
   }

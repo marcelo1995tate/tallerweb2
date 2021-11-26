@@ -25,12 +25,11 @@ exports.signIn = (req, res) => {
         var cognitoUser = new AmazonCognitoIdentify.CognitoUser(userData);
         cognitoUser.authenticateUser(authenticationDetails, {
             onSuccess: function (result){        
-                res.send(result.getIdToken().getJwtToken());
-                console.log(result.getIdToken().getJwtToken());
+                res.send(JSON.stringify(result.getIdToken().getJwtToken()));
             },
             onFailure: function(err){
                 console.log(err);
-                res.send(err);
+                res.send(JSON.stringify(err.code + "." + err.message));
             },
         })
     }catch(error){

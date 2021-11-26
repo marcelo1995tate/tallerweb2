@@ -29,12 +29,14 @@ export class LoginComponent {
     let usuario: Usuario = this.loginForm.value;
 
     this._usuarioService.loguearUsuario(usuario).then((result) => {
+      console.log("Longitud del token" + result.IdToken.length);
       if (result.IdToken.length == 0) {
         this.mensajeLogin = result.Message
       }
       else {
         document.cookie = `SSID=${result.IdToken}`;
         this.router.navigate(['/']);
+        console.log(result.IdToken.valueOf());
       }
 
     }, (error) => {
