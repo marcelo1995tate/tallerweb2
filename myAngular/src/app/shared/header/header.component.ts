@@ -16,4 +16,16 @@ export class HeaderComponent implements OnInit {
   goToOrderPage(): void{
     this.router.navigate(['/order']);
   }
+
+  cerrarSesion(){
+    console.log("adiosito");
+  }
+
+  enSesion() : boolean {
+    const value = `; ${document.cookie}`;
+    const parts = value.split("; SSID=");
+
+    if (parts.length === 2) return true
+    return false
+  }
 }

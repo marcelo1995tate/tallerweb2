@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ValidationService } from 'src/app/Services/Validation.service';
+import { Usuario } from '../Interfaces/Usuario.interface';
 import { UsuarioService } from '../Services/Usuario.service';
 
 @Component({
@@ -12,9 +14,11 @@ import { UsuarioService } from '../Services/Usuario.service';
 export class RegisterComponent {
 
   registerForm: any;
+  mensajeRegister: string;
+  errorType:string;
 
-  constructor(private _builder: FormBuilder, private usuarioService: UsuarioService) {
-
+  constructor(protected router: Router,private _builder: FormBuilder, private usuarioService: UsuarioService) {
+    this.mensajeRegister = ''
     this.registerForm = this._builder.group({
       email: ['', [Validators.required, ValidationService.emailValidator]],
       password: ['', [Validators.required, ValidationService.passValidator, Validators.minLength(8)]],
@@ -26,7 +30,15 @@ export class RegisterComponent {
   }
 
   registrarse() {
-    //console.log(this.usuarioService.loguearUsuario);
+    let usuario: Usuario = this.registerForm.value;
+
+    this.usuarioService.registrarUsuario(usuario).then((result) => { 
+        this.mensajeRegister = result.Message ;
+        this.errorType= "success";
+    }, (error) => {
+      this.mensajeRegister = error.Message
+      this.errorType= "danger";
+    });
   }
 
 }

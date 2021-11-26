@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { ParseError } from "@angular/compiler";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { Session } from "../Interfaces/Cognito.interface";
+import { Session } from "../Interfaces/Session.interface";
 import { Usuario } from "../Interfaces/Usuario.interface";
 
 @Injectable({
@@ -19,10 +19,23 @@ export class UsuarioService {
           resolve(value);
         }
         , error => {
+          reject({ Message: this.parseError(error)})
+        });
+    })
+  }
+
+  registrarUsuario(usuario: Usuario) : Promise<Session> {
+    return new Promise<Session>((resolve, reject) => {
+      this.http.post<Session>('/register', usuario).subscribe
+        (value => {
+          resolve(value);
+        }
+        , error => {
           reject({ Message: this.parseError(error), IdToken: '' })
         });
     })
   }
+
 
   private parseError(error: any): string {
     if (error.status = '404')
