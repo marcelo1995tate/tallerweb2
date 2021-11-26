@@ -1,3 +1,4 @@
+<div *ngIf="mensajeLogin.length > 0" class="alert-danger m-5 p-2 rounded">{{mensajeLogin}}</div>
 <div class="container-fluid">
     <div class="row main-content bg-success text-center">
         <div class="col-md-4 text-center company__info">
@@ -10,20 +11,22 @@
                     <h2>Log In</h2>
                 </div>
                 <div class="row">
-                    <form [formGroup]="signinForm" control="" class="form-group" (ngSubmit)="loguearse(signinForm.value)">
+                    <form [formGroup]="loginForm" control="" class="form-group" (ngSubmit)="loguearse()">
                         <div class="row">
                             <input formControlName="email" type="email" name="email" id="email" class="form__input" placeholder="E-Mail">
+                            <control-messages [control]="loginForm.get('email')" [field]="'Email'" class="text-start text-danger"></control-messages>
                         </div>
                         <div class="row">
                             <input formControlName="password" type="password" name="password" id="password" class="form__input" placeholder="Password">
+                            <control-messages [control]="loginForm.get('password')" [field]="'Password'" class="text-start text-danger"></control-messages>
                         </div>
                         <div class="row">
-                            <input type="submit" value="Log in" class="btn">
+                            <input type="submit" value="Log in" class="btn" [disabled]="!loginForm.valid">
                         </div>
                     </form>
                 </div>
                 <div class="row">
-                    <p>¿No tienes tu cuenta? <a (click) = "registrar();" class="none">Registrate</a></p>
+                    <p>¿No tienes tu cuenta? <a routerLink="/register" routerLinkActive="active" class="none">Registrate</a></p>
                 </div>
             </div>
         </div>

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ValidationService } from 'src/app/Services/Validation.service';
+import { UsuarioService } from '../services/Usuario.service';
 
 @Component({
   selector: 'register',
@@ -8,20 +10,22 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 
 export class RegisterComponent {
-  
-  signupForm: FormGroup;
-  
-  constructor(private _builder: FormBuilder){
-    this.signupForm = this._builder.group({
-      email: ['', Validators.required] ,
-      password: ['', Validators.required] ,
-      name: ['', Validators.required] ,
-      family_name: ['', Validators.required] ,
-      address: ['', Validators.required] 
+
+  registerForm: any;
+
+  constructor(private _builder: FormBuilder, private usuarioService: UsuarioService) {
+
+    this.registerForm = this._builder.group({
+      email: ['', [Validators.required, ValidationService.emailValidator]],
+      password: ['', [Validators.required, ValidationService.passValidator, Validators.minLength(8)]],
+      nombre: ['', [Validators.required, ValidationService.textValidator]],
+      apellido: ['', [Validators.required, ValidationService.textValidator]],
+      direccion: ['', [Validators.required]]
     })
+
   }
 
-  registrar(values: string){
+  registrarse(values: string) {
     const isResponseOk = (response:any) =>{
       if(!response.ok)
           console.log(response.status);
@@ -47,6 +51,6 @@ export class RegisterComponent {
       }
     })
     .catch(showError);
-    }
-  
+  }
+
 }

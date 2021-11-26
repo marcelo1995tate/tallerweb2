@@ -7,7 +7,7 @@ import {OrdersComponent} from "./Components/Productos/orders/orders.component";
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'products',
+  {path: '',
     loadChildren: () => import('./Components/Productos/products/products.module').then(m => m.ProductsModule)},
   {path: 'order', component: OrdersComponent}
 ];
