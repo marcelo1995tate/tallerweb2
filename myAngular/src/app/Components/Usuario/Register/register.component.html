@@ -10,7 +10,7 @@
                     <h2>Register</h2>
                 </div>
                 <div class="row">
-                    <form [formGroup]="signupForm" class="form-group" (ngSubmit)="enviar(signupForm.value)">
+                    <form [formGroup]="signupForm" class="form-group" (ngSubmit)="registrar(signupForm.value)">
                         <h5 class="text-start">Datos de Usuario</h5>
                         <div class="row">
                             <input formControlName="email" type="email" name="email" id="email" class="form__input" placeholder="E-Mail">
@@ -20,13 +20,13 @@
                         </div>
                         <h5 class="text-start mt-4">Datos Personales</h5>
                         <div class="row">
-                            <input formControlName="nombre" type="text" name="nombre" id="nombre" class="form__input" placeholder="Nombre">
+                            <input formControlName="name" type="text" name="name" id="name" class="form__input" placeholder="Nombre">
                         </div>
                         <div class="row">
-                            <input formControlName="apellido" type="text" name="apellido" id="apellido" class="form__input" placeholder="Apellido">
+                            <input formControlName="family_name" type="text" name="family_name" id="family_name" class="form__input" placeholder="Apellido">
                         </div>
                         <div class="row">
-                            <input formControlName="direccion" type="text" name="direccion" id="direccion" class="form__input" placeholder="Direccion">
+                            <input formControlName="address" type="text" name="address" id="address" class="form__input" placeholder="Direccion">
                         </div>
 
                         <div class="row">

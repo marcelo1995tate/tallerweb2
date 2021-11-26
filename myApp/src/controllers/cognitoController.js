@@ -24,15 +24,8 @@ exports.signIn = (req, res) => {
 
         var cognitoUser = new AmazonCognitoIdentify.CognitoUser(userData);
         cognitoUser.authenticateUser(authenticationDetails, {
-            onSuccess: function (result){
-                
-                console.log('access token + ' + result.getAccessToken().getJwtToken());
-                console.log('################################################################')
-                console.log('id token + ' + result.getIdToken().getJwtToken()); //id token
-                let decode = jwt.decode(result.getIdToken().getJwtToken());
-                console.log(decode);
-                res.send(decode.email);
-                
+            onSuccess: function (result){        
+                res.send(result.getIdToken().getJwtToken());
             },
             onFailure: function(err){
                 console.log(err);
@@ -68,14 +61,12 @@ exports.signUp = (req, res) => {
         attributeList.push(dataName,dataAddress,dataFamilyName);
 
         userPool.signUp(datos.email , datos.password , attributeList , null ,
-            function(err , result){
+            function(err){
                 if(err){
-                    console.log(err.message || JSON.stringify(err));
+                    res.send(err.name);
                     return;
                 }
-                var cognitoUser = result.user;
-                console.log('User name is ' + cognitoUser.getUsername());
-                res.send("Se creo el usuario correctamente");
+                res.send('Te registraste correctamente, porfavor verifica tu correo');
             })
             
     }catch(error){

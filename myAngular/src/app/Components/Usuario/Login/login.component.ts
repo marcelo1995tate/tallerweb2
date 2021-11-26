@@ -23,7 +23,32 @@ export class LoginComponent {
   registrar(){
     this.router.navigate(['/register'])
   }
-  loguearse(data: any){
-    alert(data.email);
+  loguearse(values: any){
+    const isResponseOk = (response:any) =>{
+      if(!response.ok)
+          console.log(response.status);
+      return response.text();    
+    }
+  
+    function showError(err:string){
+      console.log('muestro error' , err);
+    }
+
+    let userJson = JSON.stringify(values);
+  
+    fetch('http://localhost:3000/cognito/sign-in',{
+      headers: {'Content-Type' : 'application/json'},
+      method: 'POST',
+      body: userJson
+    })
+    .then(response => isResponseOk(response))
+    .then(data =>{
+      alert(data);
+      if(!data.includes("Exception")){
+        window.location.href = "http://localhost:4200/login";
+      }
+      window.location.href = "http://localhost:4200";
+    })
+    .catch(showError);
+    }
   }
-}
