@@ -16,7 +16,7 @@ import {FooterComponent} from "./shared/footer/footer.component";
 import { ControlMessagesComponent } from './shared/ControlMessage/ControlMessage.component';
 
 import { ValidationService } from './Services/Validation.service';
-import { UsuarioService } from './Components/Usuario/Services/Usuario.service';
+import { UsuarioService } from './Components/Usuario/services/Usuario.service';
 
 @NgModule({
     declarations: [

@@ -26,6 +26,7 @@ exports.signIn = (req, res) => {
         cognitoUser.authenticateUser(authenticationDetails, {
             onSuccess: function (result){        
                 res.send(result.getIdToken().getJwtToken());
+                console.log(result.getIdToken().getJwtToken());
             },
             onFailure: function(err){
                 console.log(err);
