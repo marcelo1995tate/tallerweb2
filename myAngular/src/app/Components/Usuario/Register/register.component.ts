@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidationService } from 'src/app/Services/Validation.service';
+import { UsuarioService } from '../Services/Usuario.service';
 
 @Component({
   selector: 'register',
@@ -12,7 +13,8 @@ export class RegisterComponent {
 
   registerForm: any;
 
-  constructor(private _builder: FormBuilder) {
+  constructor(private _builder: FormBuilder, private usuarioService: UsuarioService) {
+
     this.registerForm = this._builder.group({
       email: ['', [Validators.required, ValidationService.emailValidator]],
       password: ['', [Validators.required, ValidationService.passValidator, Validators.minLength(8)]],
@@ -20,10 +22,11 @@ export class RegisterComponent {
       apellido: ['', [Validators.required, ValidationService.textValidator]],
       direccion: ['', [Validators.required]]
     })
+
   }
 
-  enviar() {
-    console.log(this.registerForm);
+  registrarse() {
+    //console.log(this.usuarioService.loguearUsuario);
   }
 
 }

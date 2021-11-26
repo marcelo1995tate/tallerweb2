@@ -1,3 +1,4 @@
+<div *ngIf="mensajeLogin.length > 0" class="alert-danger m-5 p-2 rounded">{{mensajeLogin}}</div>
 <div class="container-fluid">
     <div class="row main-content bg-success text-center">
         <div class="col-md-4 text-center company__info">
@@ -25,7 +26,7 @@
                     </form>
                 </div>
                 <div class="row">
-                    <p>¿No tienes tu cuenta? <a (click) = "registrar();" class="none">Registrate</a></p>
+                    <p>¿No tienes tu cuenta? <a routerLink="/register" routerLinkActive="active" class="none">Registrate</a></p>
                 </div>
             </div>
         </div>

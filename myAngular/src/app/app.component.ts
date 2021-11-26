@@ -12,7 +12,6 @@ export class AppComponent{
     router.events.subscribe((val) => {
       if(val instanceof NavigationEnd == true){
         this.route = router.url
-        console.log(this.route)
       } 
   });
   }

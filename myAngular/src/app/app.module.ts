@@ -15,6 +15,7 @@ import { RegisterComponent } from './Components/Usuario/Register/register.compon
 import { ControlMessagesComponent } from './shared/ControlMessage/ControlMessage.component';
 
 import { ValidationService } from './Services/Validation.service';
+import { UsuarioService } from './Components/Usuario/Services/Usuario.service';
 
 @NgModule({
     declarations: [
@@ -34,7 +35,7 @@ import { ValidationService } from './Services/Validation.service';
         FormsModule,
         ReactiveFormsModule
     ],
-    providers: [ValidationService],
+    providers: [ValidationService, UsuarioService],
     exports: [
     ],
     bootstrap: [AppComponent]
