@@ -4,14 +4,12 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Session } from "../Interfaces/Cognito.interface";
 import { Usuario } from "../Interfaces/Usuario.interface";
-import { environment } from "src/environments/environment";
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
-  private baseURL = environment.API_BASE_URL;
-
   constructor(private http: HttpClient) {}
 
   loguearUsuario(usuario: Usuario) : Promise<Session> {
