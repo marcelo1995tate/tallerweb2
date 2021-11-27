@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ValidationService } from 'src/app/Services/Validation.service';
+import { environment } from 'src/environments/environment';
 import { Usuario } from '../Interfaces/Usuario.interface';
 import { UsuarioService } from '../services/Usuario.service';
 
@@ -32,7 +33,7 @@ export class RegisterComponent {
   registrarse() {
     let usuario: Usuario = this.registerForm.value;
 
-    this.usuarioService.registrarUsuario(usuario).then((result) => { 
+    this.usuarioService.gestionarSesion(usuario, environment.API_BASE_URL + '/cognito/sign-up').then((result) => { 
         this.mensajeRegister = result.Message ;
         this.errorType= "success";
     }, (error) => {

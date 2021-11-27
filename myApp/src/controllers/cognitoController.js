@@ -90,7 +90,7 @@ exports.forgotPassword = (req , res) => {
         cognitoUser.forgotPassword({
             onSuccess: function(result) {
                 console.log('call result: ' + result);
-                return res.send("Fue enviado el codigo para el recupero de contraseña");
+                return res.send(JSON.stringify("Fue enviado el codigo para el recupero de contraseña"));
             },
             onFailure: function(err){
                 console.log(err);
@@ -112,12 +112,14 @@ exports.confirmNewPassword = (req , res) => {
             Username: datos.email,
             Pool: userPool
         };
+
+        console.log(datos.email);
     
         let cognitoUser = new AmazonCognitoIdentify.CognitoUser(userData);
         cognitoUser.confirmPassword(datos.code , datos.newPassword , {
             onSuccess: function(result){
                 console.log('call result: ' + result);
-                return res.send("Contraseña restablecida");
+                return res.send(JSON.stringify("Contraseña restablecida"));
     
             },
             onFailure: function(err){

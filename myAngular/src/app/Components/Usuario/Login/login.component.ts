@@ -5,6 +5,7 @@ import { ValidationService } from 'src/app/Services/Validation.service';
 import { UsuarioService } from '../services/Usuario.service';
 import { Usuario } from "../Interfaces/Usuario.interface";
 import { faAlgolia } from '@fortawesome/free-brands-svg-icons';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class LoginComponent {
   loguearse() {
     let usuario: Usuario = this.loginForm.value;
 
-    this._usuarioService.loguearUsuario(usuario).then((result) => {
+    this._usuarioService.gestionarSesion(usuario, environment.API_BASE_URL + '/cognito/sign-in').then((result) => {
       if (result.IdToken.length == 0) {
         this.mensajeLogin = result.Message
       }

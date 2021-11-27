@@ -11,48 +11,19 @@ import { Usuario } from "../Interfaces/Usuario.interface";
 })
 export class UsuarioService {
   constructor(private http: HttpClient) {}
-
-  loguearUsuario(usuario: Usuario) : Promise<Session> {
+  
+  gestionarSesion(usuario: Usuario, url: string) : Promise<Session> {
     return new Promise<Session>((resolve, reject) => {
-      this.http.post<Session>('http://localhost:3000/cognito/sign-in', usuario).subscribe
+      this.http.post<Session>(url, usuario).subscribe
         (value => {
-          
           const resultado = value.toString();
-                    
-          if(resultado.includes("Exception")){
-            
-            value = {
-              IdToken:"",
-              Message:resultado.split(".")[1]
-            }
 
+          if(url.includes("sign-in")){
+            value = this.loguear(resultado, value);
           }else{
-            
-            value = {
-              IdToken:resultado,
-              Message:""
-            }
+            value = this.registrar(value, resultado);
           }
           
-          resolve(value);
-          
-        }
-        , error => {
-          reject({ Message: this.parseError(error)})
-        });
-    })
-  }
-
-  registrarUsuario(usuario: Usuario) : Promise<Session> {
-    return new Promise<Session>((resolve, reject) => {
-      this.http.post<Session>('http://localhost:3000/cognito/sign-up', usuario).subscribe
-        (value => {
-          
-          value = {
-            IdToken : "",
-            Message : value.toString()
-          }
-
           resolve(value);
           
         }
@@ -63,12 +34,38 @@ export class UsuarioService {
         });
     })
   }
+  
+  private registrar(value: Session, resultado: string) {
+    value = {
+      IdToken: "",
+      Message: resultado
+    };
+    return value;
+  }
 
+  private loguear(resultado: string, value: Session) {
+    if (resultado.includes("Exception")) {
+      
+      value = {
+        IdToken: "",
+        Message: resultado.split(".")[1]
+      };
+
+    } else {
+      
+      value = {
+        IdToken: resultado,
+        Message: ""
+      };
+      
+    }
+    return value;
+  }
 
   private parseError(error: any): string {
     if (error.status = '404')
-      return 'Error en el servidor, intente nuevamente!'
+      return 'El servidor no se encuentra disponible!'
     else
-      return 'Error Desconocido!'
+      return 'Error en el servidor, intente nuevamente!'
   }
 }
