@@ -15,16 +15,7 @@ export class CartService {
     private totalSubject = new BehaviorSubject<number>(0);
     private quantitySubject = new BehaviorSubject<number>(0);
 
-    constructor() {
-        if (localStorage.getItem("Carrito") != null)
-            this.products = JSON.parse(localStorage.getItem("Carrito") as string);
-
-        this.quantityProducts();
-        this.calculateTotal();
-        this.products.forEach((prod) => {
-            this.addToCart(prod)
-        })
-    }
+    constructor() { this.reload() }
     get total$(): Observable<number> {
         return this.totalSubject.asObservable();
     }
@@ -39,6 +30,15 @@ export class CartService {
 
     public updateCart(product: Product): void {
         this.addToCart(product);
+        this.quantityProducts();
+        this.calculateTotal();
+    }
+
+    public reload() {
+        if (localStorage.getItem("Carrito") != null)
+            this.products = JSON.parse(localStorage.getItem("Carrito") as string);
+
+        this.cartSubject.next(this.products);
         this.quantityProducts();
         this.calculateTotal();
     }

@@ -19,12 +19,15 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.productsService.getProducts().subscribe((products: Product[]) => this.products = products);
+
   }
 
 
   addToCart(product: Product): void {
-    if (!SessionHandlerService.enSesion())
+    if (!SessionHandlerService.enSesion()){
       this.router.navigate(['/login'])
+      return
+    }
 
     console.log('Add to car', product);
     this.cartService.updateCart(product);
