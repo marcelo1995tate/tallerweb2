@@ -54,7 +54,7 @@ const validaciones ={
             }
         }
         catch {
-            res.send('CAMPOS INVALIDOS')
+            res.send('CAMPOS INVALIDOS ')
         }
     }
 }
