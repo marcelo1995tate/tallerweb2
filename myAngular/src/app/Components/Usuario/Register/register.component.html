@@ -1,3 +1,4 @@
+<div *ngIf="mensajeRegister.length > 0" class="alert-{{errorType}} m-5 p-2 rounded">{{mensajeRegister}}</div>
 <div class="container-fluid">
     <div class="row main-content bg-custom text-center">
         <div class="col-md-4 text-center company__info">
@@ -10,27 +11,32 @@
                     <h2>Register</h2>
                 </div>
                 <div class="row">
-                    <form [formGroup]="signupForm" class="form-group" (ngSubmit)="registrar(signupForm.value)">
+                    <form [formGroup]="registerForm" class="form-group" (ngSubmit)="registrarse()">
                         <h5 class="text-start">Datos de Usuario</h5>
                         <div class="row">
                             <input formControlName="email" type="email" name="email" id="email" class="form__input" placeholder="E-Mail">
+                            <control-messages [control]="registerForm.get('email')" [field]="'Email'" class="text-start text-danger"></control-messages>
                         </div>
                         <div class="row">
                             <input formControlName="password" type="password" name="password" id="password" class="form__input" placeholder="Password">
+                            <control-messages [control]="registerForm.get('password')" [field]="'Password'" class="text-start text-danger"></control-messages>
                         </div>
                         <h5 class="text-start mt-4">Datos Personales</h5>
                         <div class="row">
-                            <input formControlName="name" type="text" name="name" id="name" class="form__input" placeholder="Nombre">
+                            <input formControlName="nombre" type="text" name="nombre" id="nombre" class="form__input" placeholder="Nombre">
+                            <control-messages [control]="registerForm.get('nombre')" [field]="'Nombre'" class="text-start text-danger"></control-messages>
                         </div>
                         <div class="row">
-                            <input formControlName="family_name" type="text" name="family_name" id="family_name" class="form__input" placeholder="Apellido">
+                            <input formControlName="apellido" type="text" name="apellido" id="apellido" class="form__input" placeholder="Apellido">
+                            <control-messages [control]="registerForm.get('apellido')" [field]="'Apellido'" class="text-start text-danger"></control-messages>
                         </div>
                         <div class="row">
-                            <input formControlName="address" type="text" name="address" id="address" class="form__input" placeholder="Direccion">
+                            <input formControlName="direccion" type="text" name="direccion" id="direccion" class="form__input" placeholder="Direccion">
+                            <control-messages [control]="registerForm.get('direccion')" [field]="'Direccion'" class="text-start text-danger"></control-messages>
                         </div>
 
                         <div class="row">
-                            <input type="submit" value="Registrarse" class="btn">
+                            <input type="submit" value="Registrarse" class="btn" [disabled]="!registerForm.valid">
                         </div>
                     </form>
                 </div>

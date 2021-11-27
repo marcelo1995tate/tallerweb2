@@ -25,11 +25,11 @@ exports.signIn = (req, res) => {
         var cognitoUser = new AmazonCognitoIdentify.CognitoUser(userData);
         cognitoUser.authenticateUser(authenticationDetails, {
             onSuccess: function (result){        
-                res.send(result.getIdToken().getJwtToken());
+                res.send(JSON.stringify(result.getIdToken().getJwtToken()));
             },
             onFailure: function(err){
                 console.log(err);
-                res.send(err);
+                res.send(JSON.stringify(err.code + "." + err.message));
             },
         })
     }catch(error){
@@ -45,17 +45,17 @@ exports.signUp = (req, res) => {
 
         let dataName = {
             Name: 'name',
-            Value: datos.name,
+            Value: datos.nombre,
         };
 
         let dataAddress = {
             Name: 'address',
-            Value: datos.address,
+            Value: datos.direccion,
         };
 
         let dataFamilyName = {
             Name: 'family_name',
-            Value: datos.family_name,
+            Value: datos.apellido,
         };        
 
         attributeList.push(dataName,dataAddress,dataFamilyName);
@@ -64,9 +64,11 @@ exports.signUp = (req, res) => {
             function(err){
                 if(err){
                     res.send(err.name);
+                    console.log(err);
                     return;
                 }
-                res.send('Te registraste correctamente, porfavor verifica tu correo');
+                res.send(JSON.stringify('Te registraste correctamente, porfavor verifica tu correo'));
+                console.log("conexion correcta");
             })
             
     }catch(error){
@@ -88,7 +90,7 @@ exports.forgotPassword = (req , res) => {
         cognitoUser.forgotPassword({
             onSuccess: function(result) {
                 console.log('call result: ' + result);
-                return res.send("Fue enviado el codigo para el recupero de contraseña");
+                return res.send(JSON.stringify("Fue enviado el codigo para el recupero de contraseña"));
             },
             onFailure: function(err){
                 console.log(err);
@@ -110,12 +112,14 @@ exports.confirmNewPassword = (req , res) => {
             Username: datos.email,
             Pool: userPool
         };
+
+        console.log(datos.email);
     
         let cognitoUser = new AmazonCognitoIdentify.CognitoUser(userData);
         cognitoUser.confirmPassword(datos.code , datos.newPassword , {
             onSuccess: function(result){
                 console.log('call result: ' + result);
-                return res.send("Contraseña restablecida");
+                return res.send(JSON.stringify("Contraseña restablecida"));
     
             },
             onFailure: function(err){

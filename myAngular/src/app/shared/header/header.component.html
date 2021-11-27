@@ -1,12 +1,32 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container px-4 px-lg-5">
-        <a class="navbar-brand btn" (click)="goToProductsPage()">Mercado Fake</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-        <div class="navbar-collapse collapse show" id="navbarSupportedContent" style="">
+<header id="page-top" class="">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" href="">Mercado Breli</a>
+
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
+                <li>
+                    <form class="d-flex form"> <input class="form-control mr-2 " type="search"
+                            placeholder="Buscar productos" aria-label="Search">
+                        <button class="button" type="submit">
+                            <i class="fa fa-search "></i>
+                        </button>
+                    </form>
+                </li>
+                <div *ngIf="enSesion(); then login else logout"></div>
+                <ng-template #login>
+                    <li>
+                        <app-cart (click)="goToOrderPage()"></app-cart>
+                    </li>
+                    <li><a (click)="cerrarSesion()"></a></li>
+                </ng-template>
+                <ng-template #logout>
+                    <li class="nav-item float-right"><a class="nav-link" routerLink="/login"
+                            routerLinkActive="active">Log in</a>
+                    </li>
+                    <li class="nav-item float-right"><a class="nav-link" routerLink="/register"
+                            routerLinkActive="active">Register</a></li>
+                </ng-template>
             </ul>
-            <app-cart (click)="goToOrderPage()"></app-cart>
         </div>
-    </div>
-</nav>
+    </nav>
+</header>

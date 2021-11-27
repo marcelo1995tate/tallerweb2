@@ -20,4 +20,16 @@ export class HeaderComponent implements OnInit {
   goToProductsPage(): void {
     this.router.navigate(['/products'])
   }
+  
+  cerrarSesion(){
+    console.log("adiosito");
+  }
+
+  enSesion() : boolean {
+    const value = `; ${document.cookie}`;
+    const parts = value.split("; SSID=");
+
+    if (parts.length === 2) return true
+    return false
+  }
 }

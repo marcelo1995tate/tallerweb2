@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FormsModule, NgForm } from '@angular/forms';
+import { ValidationService } from 'src/app/Services/Validation.service';
+import { UsuarioService } from '../services/Usuario.service';
+import { Usuario } from "../Interfaces/Usuario.interface";
+import { faAlgolia } from '@fortawesome/free-brands-svg-icons';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -11,44 +15,32 @@ import { FormsModule, NgForm } from '@angular/forms';
 })
 export class LoginComponent {
 
-  signinForm: FormGroup;
+  loginForm: any;
+  mensajeLogin: string;
 
-  constructor(protected router:Router, private _builder: FormBuilder) { 
-    this.signinForm = this._builder.group({
-      email: ['', Validators.required],
+  constructor(protected router: Router, private _builder: FormBuilder, private _usuarioService: UsuarioService) {
+    this.mensajeLogin = ''
+    this.loginForm = this._builder.group({
+      email: ['', [Validators.required, ValidationService.emailValidator]],
       password: ['', Validators.required]
     })
   }
 
-  registrar(){
-    this.router.navigate(['/register'])
-  }
-  loguearse(values: any){
-    const isResponseOk = (response:any) =>{
-      if(!response.ok)
-          console.log(response.status);
-      return response.text();    
-    }
-  
-    function showError(err:string){
-      console.log('muestro error' , err);
-    }
+  loguearse() {
+    let usuario: Usuario = this.loginForm.value;
 
-    let userJson = JSON.stringify(values);
-  
-    fetch('http://localhost:3000/cognito/sign-in',{
-      headers: {'Content-Type' : 'application/json'},
-      method: 'POST',
-      body: userJson
-    })
-    .then(response => isResponseOk(response))
-    .then(data =>{
-      alert(data);
-      if(!data.includes("Exception")){
-        window.location.href = "http://localhost:4200/login";
+    this._usuarioService.gestionarSesion(usuario, environment.API_BASE_URL + '/cognito/sign-in').then((result) => {
+      if (result.IdToken.length == 0) {
+        this.mensajeLogin = result.Message
       }
-      window.location.href = "http://localhost:4200";
-    })
-    .catch(showError);
-    }
+      else {
+        document.cookie = `SSID=${result.IdToken}`;
+        this.router.navigate(['/']);
+        console.log(result.IdToken.valueOf());
+      }
+
+    }, (error) => {
+      this.mensajeLogin = error.Message
+    });
   }
+}

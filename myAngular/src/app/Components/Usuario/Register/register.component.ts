@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ValidationService } from 'src/app/Services/Validation.service';
+import { environment } from 'src/environments/environment';
+import { Usuario } from '../Interfaces/Usuario.interface';
+import { UsuarioService } from '../services/Usuario.service';
 
 @Component({
   selector: 'register',
@@ -8,45 +13,33 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 
 export class RegisterComponent {
-  
-  signupForm: FormGroup;
-  
-  constructor(private _builder: FormBuilder){
-    this.signupForm = this._builder.group({
-      email: ['', Validators.required] ,
-      password: ['', Validators.required] ,
-      name: ['', Validators.required] ,
-      family_name: ['', Validators.required] ,
-      address: ['', Validators.required] 
+
+  registerForm: any;
+  mensajeRegister: string;
+  errorType:string;
+
+  constructor(protected router: Router,private _builder: FormBuilder, private usuarioService: UsuarioService) {
+    this.mensajeRegister = ''
+    this.registerForm = this._builder.group({
+      email: ['', [Validators.required, ValidationService.emailValidator]],
+      password: ['', [Validators.required, ValidationService.passValidator, Validators.minLength(8)]],
+      nombre: ['', [Validators.required, ValidationService.textValidator]],
+      apellido: ['', [Validators.required, ValidationService.textValidator]],
+      direccion: ['', [Validators.required]]
     })
+
   }
 
-  registrar(values: string){
-    const isResponseOk = (response:any) =>{
-      if(!response.ok)
-          console.log(response.status);
-      return response.text();    
-    }
-  
-    function showError(err:string){
-      console.log('muestro error' , err);
-    }
+  registrarse() {
+    let usuario: Usuario = this.registerForm.value;
 
-    let userJson = JSON.stringify(values);
-  
-    fetch('http://localhost:3000/cognito/sign-up',{
-      headers: {'Content-Type' : 'application/json'},
-      method: 'POST',
-      body: userJson
-    })
-    .then(response => isResponseOk(response))
-    .then(data =>{
-      alert(data);
-      if(!data.includes("Exception")){
-        window.location.href = "http://localhost:4200/login";
-      }
-    })
-    .catch(showError);
-    }
-  
+    this.usuarioService.gestionarSesion(usuario, environment.API_BASE_URL + '/cognito/sign-up').then((result) => { 
+        this.mensajeRegister = result.Message ;
+        this.errorType= "success";
+    }, (error) => {
+      this.mensajeRegister = error.Message
+      this.errorType= "danger";
+    });
+  }
+
 }
