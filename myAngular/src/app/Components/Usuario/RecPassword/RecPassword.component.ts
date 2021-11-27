@@ -16,6 +16,7 @@ export class RecPassComponent {
   recFormA: any;
   recFormB: any;
   mensajeRecupero: string;
+  msgType: string;
   estado: string;
 
   constructor(protected router: Router, private _builder: FormBuilder, private _usuarioService: UsuarioService) {
@@ -34,9 +35,12 @@ export class RecPassComponent {
     let usuario: Usuario = this.recFormA.value;
 
     this._usuarioService.gestionarSesion(usuario, environment.API_BASE_URL + '/cognito/forgotPassword').then((result) => {
+      this.mensajeRecupero = result.Message
       this.estado = 'REC_PASS'
+      this.msgType = 'success'
     }, (error) => {
       this.mensajeRecupero = error.Message
+      this.msgType = 'danger'
     });
   }
 
@@ -50,6 +54,7 @@ export class RecPassComponent {
       this.router.navigate(['/']);
     }, (error) => {
       this.mensajeRecupero = error.Message
+      this.msgType = 'danger'
     });
 
   }

@@ -16,7 +16,7 @@ export class RegisterComponent {
 
   registerForm: any;
   mensajeRegister: string;
-  errorType:string;
+  msgType:string;
 
   constructor(protected router: Router,private _builder: FormBuilder, private usuarioService: UsuarioService) {
     this.mensajeRegister = ''
@@ -34,11 +34,11 @@ export class RegisterComponent {
     let usuario: Usuario = this.registerForm.value;
     this.usuarioService.gestionarSesion(usuario, environment.API_BASE_URL + '/cognito/sign-up').then((result) => { 
         this.mensajeRegister = result.Message ;
-        this.errorType= "success";
+        this.msgType= "success";
         this.registerForm.reset()
     }, (error) => {
       this.mensajeRegister = error.Message
-      this.errorType= "danger";
+      this.msgType= "danger";
     });
   }
 
