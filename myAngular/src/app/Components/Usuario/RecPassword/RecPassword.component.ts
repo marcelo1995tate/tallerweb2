@@ -46,6 +46,7 @@ export class RecPassComponent {
     usuario.email = this.recFormA.get('email').value;
 
     this._usuarioService.gestionarSesion(usuario, environment.API_BASE_URL + '/cognito/confirmNewPassword').then((result) => {
+      alert(result.Message);
       this.router.navigate(['/']);
     }, (error) => {
       this.mensajeRecupero = error.Message

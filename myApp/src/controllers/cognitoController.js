@@ -113,10 +113,10 @@ exports.confirmNewPassword = (req , res) => {
             Pool: userPool
         };
 
-        console.log(datos.email);
+        console.log(datos);
     
         let cognitoUser = new AmazonCognitoIdentify.CognitoUser(userData);
-        cognitoUser.confirmPassword(datos.code , datos.newPassword , {
+        cognitoUser.confirmPassword(datos.codigo , datos.password , {
             onSuccess: function(result){
                 console.log('call result: ' + result);
                 return res.send(JSON.stringify("Contraseña restablecida"));
