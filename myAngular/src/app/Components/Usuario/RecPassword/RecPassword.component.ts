@@ -25,7 +25,7 @@ export class RecPassComponent {
       email: ['', [Validators.required, ValidationService.emailValidator]]
     })
     this.recFormB = this._builder.group({
-      password: ['', Validators.required],
+      password: ['', [Validators.required, ValidationService.passValidator, Validators.minLength(8)]],
       codigo: ['', Validators.required]
     })
   }
@@ -46,7 +46,7 @@ export class RecPassComponent {
     usuario.email = this.recFormA.get('email').value;
 
     this._usuarioService.gestionarSesion(usuario, environment.API_BASE_URL + '/cognito/confirmNewPassword').then((result) => {
-      alert(result.Message);
+      alert(result.Message)
       this.router.navigate(['/']);
     }, (error) => {
       this.mensajeRecupero = error.Message

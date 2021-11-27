@@ -1,58 +1,76 @@
-import {Injectable} from "@angular/core";
-import {Product} from "../../interface/product.interface";
-import {BehaviorSubject, Observable} from "rxjs";
+import { Injectable } from "@angular/core";
+import { Product } from "../../interface/product.interface";
+import { BehaviorSubject, Observable } from "rxjs";
 
 
 @Injectable({
-    providedIn:'root'
+    providedIn: 'root'
 })
 
-export class CartService{
-  products: Product[] = [];
+export class CartService {
 
-  private cartSubject = new BehaviorSubject<Product[]>([]);
-  private totalSubject = new BehaviorSubject<number>(0);
-  private quantitySubject = new BehaviorSubject<number>(0);
+    products: Product[] = [];
 
+    private cartSubject = new BehaviorSubject<Product[]>([]);
+    private totalSubject = new BehaviorSubject<number>(0);
+    private quantitySubject = new BehaviorSubject<number>(0);
 
-  get total$(): Observable<number>{
-      return this.totalSubject.asObservable();
-  }
+    constructor() {
+        if (localStorage.getItem("Carrito") != null)
+            this.products = JSON.parse(localStorage.getItem("Carrito") as string);
 
-  get quantity$(): Observable<number>{
-      return this.quantitySubject.asObservable();
-  }
+        this.quantityProducts();
+        this.calculateTotal();
+        this.products.forEach((prod) => {
+            this.addToCart(prod)
+        })
+    }
+    get total$(): Observable<number> {
+        return this.totalSubject.asObservable();
+    }
 
-  get cart$(): Observable<Product[]>{
-      return this.cartSubject.asObservable();
-  }
+    get quantity$(): Observable<number> {
+        return this.quantitySubject.asObservable();
+    }
 
-  public updateCart(product:Product): void{
-      this.addToCart(product);
-      this.quantityProducts();
-      this.calculateTotal();
-  }
+    get cart$(): Observable<Product[]> {
+        return this.cartSubject.asObservable();
+    }
 
-  private addToCart(product:Product): void{
-      const isProductInCar = this.products.find(({ ID_PRODUCTO }) => ID_PRODUCTO === product.ID_PRODUCTO);
+    public updateCart(product: Product): void {
+        this.addToCart(product);
+        this.quantityProducts();
+        this.calculateTotal();
+    }
 
-      if(isProductInCar){
-          isProductInCar.CANTIDAD += 1;
-      }else{
-          this.products.push({...product, CANTIDAD:1})
-      }
+    private addToCart(product: Product): void {
+        const isProductInCar = this.products.find(({ ID_PRODUCTO }) => ID_PRODUCTO === product.ID_PRODUCTO);
 
-      this.cartSubject.next(this.products);
-  }
+        if (isProductInCar) {
+            isProductInCar.CANTIDAD += 1;
+        } else {
+            this.products.push({ ...product, CANTIDAD: 1 })
+        }
 
-  private quantityProducts(): void{
-      const quantity = this.products.reduce((accumulator, prod) => accumulator += prod.CANTIDAD,0);
-      this.quantitySubject.next(quantity);
-  }
+        this.cartSubject.next(this.products);
+        localStorage.setItem("Carrito", JSON.stringify(this.products))
+    }
 
-  private calculateTotal(): void{
-      const total = this.products.reduce((accumulator, prod) => accumulator += (prod.PRECIO * prod.CANTIDAD),0);
-      this.totalSubject.next(total);
-  }
+    private quantityProducts(): void {
+        const quantity = this.products.reduce((accumulator, prod) => accumulator += prod.CANTIDAD, 0);
+        this.quantitySubject.next(quantity);
+    }
 
-  }
+    private calculateTotal(): void {
+        const total = this.products.reduce((accumulator, prod) => accumulator += (prod.PRECIO * prod.CANTIDAD), 0);
+        this.totalSubject.next(total);
+    }
+
+    comprar() {
+        this.products = []
+        this.quantityProducts();
+        this.calculateTotal();
+        this.cartSubject.next(this.products);
+        localStorage.clear();
+    }
+}

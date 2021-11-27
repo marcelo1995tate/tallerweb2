@@ -17,13 +17,13 @@
                     <li>
                         <app-cart (click)="goToOrderPage()"></app-cart>
                     </li>
-                    <li><a (click)="cerrarSesion()">Log out</a></li>
+                    <li class="nav-item float-end"><a (click)="cerrarSesion()" class="nav-link" >Log out</a></li>
                 </ng-template>
                 <ng-template #logout>
-                    <li class="nav-item float-right"><a class="nav-link" routerLink="/login"
+                    <li class="nav-item float-end"><a class="nav-link" routerLink="/login"
                             routerLinkActive="active">Log in</a>
                     </li>
-                    <li class="nav-item float-right"><a class="nav-link" routerLink="/register"
+                    <li class="nav-item float-end"><a class="nav-link" routerLink="/register"
                             routerLinkActive="active">Register</a></li>
                 </ng-template>
             </ul>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ValidationService } from 'src/app/Services/Validation.service';
 import { environment } from 'src/environments/environment';
@@ -32,10 +32,10 @@ export class RegisterComponent {
 
   registrarse() {
     let usuario: Usuario = this.registerForm.value;
-
     this.usuarioService.gestionarSesion(usuario, environment.API_BASE_URL + '/cognito/sign-up').then((result) => { 
         this.mensajeRegister = result.Message ;
         this.errorType= "success";
+        this.registerForm.reset()
     }, (error) => {
       this.mensajeRegister = error.Message
       this.errorType= "danger";

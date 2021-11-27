@@ -12,7 +12,7 @@ export class ValidationService {
     }
 
     static emailValidator(control: any) {
-        if (
+        if (control.value != null &&
             control.value.match(
                 /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
             )
@@ -24,14 +24,14 @@ export class ValidationService {
     }
 
     static passValidator(control: any) {
-        if (control.value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).*$/))
+        if (control.value != null && control.value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).*$/))
             return null
         else
             return { passwordInvalida: true }
     }
 
     static textValidator(control: any) {
-        if (control.value.match(/^[a-zA-Z\s]+$/))
+        if (control.value != null && control.value.match(/^[a-zA-Z\s]+$/))
             return null
         else
             return { textoInvalido: true }

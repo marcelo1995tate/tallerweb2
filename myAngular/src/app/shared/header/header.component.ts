@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/'])
   }
   
-  cerrarSesion(){
+  public cerrarSesion(){
     SessionHandlerService.cleanSession();
     this.router.navigate(['/'])
   }

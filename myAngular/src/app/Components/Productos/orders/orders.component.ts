@@ -16,12 +16,16 @@ export class OrdersComponent {
   cart$ = this.cartService.cart$;
 
   constructor(private cartService: CartService, private router: Router) {
-    if (!SessionHandlerService.enSesion())
+    if (!SessionHandlerService.enSesion()){
       this.router.navigate(['/login']);
+      return;
+    }
 
     this.total$ = this.cartService.total$;
     this.cart$ = this.cartService.cart$;
   }
 
-
+  comprar(){
+    this.cartService.comprar();
+  }
 }
