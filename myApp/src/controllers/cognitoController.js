@@ -45,17 +45,17 @@ exports.signUp = (req, res) => {
 
         let dataName = {
             Name: 'name',
-            Value: datos.name,
+            Value: datos.nombre,
         };
 
         let dataAddress = {
             Name: 'address',
-            Value: datos.address,
+            Value: datos.direccion,
         };
 
         let dataFamilyName = {
             Name: 'family_name',
-            Value: datos.family_name,
+            Value: datos.apellido,
         };        
 
         attributeList.push(dataName,dataAddress,dataFamilyName);
@@ -64,9 +64,11 @@ exports.signUp = (req, res) => {
             function(err){
                 if(err){
                     res.send(err.name);
+                    console.log(err);
                     return;
                 }
-                res.send('Te registraste correctamente, porfavor verifica tu correo');
+                res.send(JSON.stringify('Te registraste correctamente, porfavor verifica tu correo'));
+                console.log("conexion correcta");
             })
             
     }catch(error){
