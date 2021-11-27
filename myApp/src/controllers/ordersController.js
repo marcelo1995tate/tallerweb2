@@ -1,4 +1,3 @@
-const { SSL_OP_NO_TLSv1_1 } = require('constants');
 const db = require('../../database/models');
 const { QueryTypes } = require('sequelize');
 

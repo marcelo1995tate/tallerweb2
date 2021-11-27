@@ -1,4 +1,3 @@
-const { SSL_OP_NO_TLSv1_1 } = require('constants');
 const db = require('../../database/models');
 
 const controller = {
@@ -21,7 +20,7 @@ const controller = {
     },
     create: (req, res) => {
         
-        db.Productos.create({ NOMBRE:req.body.NOMBRE,DESCRIPCION:req.body.DESCRIPCION,CLASIFICACION:req.body.DESCRIPCION,IMAGEN:req.file.filename,PRECIO:req.body.PRECIO})
+        db.Productos.create({ NOMBRE:req.body.NOMBRE,DESCRIPCION:req.body.DESCRIPCION,CLASIFICACION:req.body.CLASIFICACION,IMAGEN:req.file.filename,PRECIO:req.body.PRECIO})
         res.send();
     },
 }

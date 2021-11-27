@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ValidationService } from 'src/app/Services/Validation.service';
 import { environment } from 'src/environments/environment';
 import { Usuario } from '../Interfaces/Usuario.interface';
-import { UsuarioService } from '../services/Usuario.service';
+import { UsuarioService } from '../Services/Usuario.service';
 
 @Component({
   selector: 'register',
