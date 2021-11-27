@@ -28,7 +28,7 @@ export class LoginComponent {
   loguearse() {
     let usuario: Usuario = this.loginForm.value;
 
-    this._usuarioService.loguearUsuario(usuario).then((result) => {
+    this._usuarioService.gestionarSesion(usuario, '/signin').then((result) => {
       if (result.IdToken.length == 0) {
         this.mensajeLogin = result.Message
       }

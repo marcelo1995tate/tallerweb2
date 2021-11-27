@@ -32,7 +32,7 @@ export class RegisterComponent {
   registrarse() {
     let usuario: Usuario = this.registerForm.value;
 
-    this.usuarioService.registrarUsuario(usuario).then((result) => { 
+    this.usuarioService.gestionarSesion(usuario, '/register').then((result) => { 
         this.mensajeRegister = result.Message ;
         this.errorType= "success";
     }, (error) => {

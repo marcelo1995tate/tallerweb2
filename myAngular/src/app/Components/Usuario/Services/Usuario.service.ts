@@ -11,22 +11,9 @@ import { Usuario } from "../Interfaces/Usuario.interface";
 export class UsuarioService {
 
   constructor(private http: HttpClient) {}
-
-  loguearUsuario(usuario: Usuario) : Promise<Session> {
+  gestionarSesion(usuario: Usuario, url: string) : Promise<Session> {
     return new Promise<Session>((resolve, reject) => {
-      this.http.post<Session>('/signin', usuario).subscribe
-        (value => {
-          resolve(value);
-        }
-        , error => {
-          reject({ Message: this.parseError(error)})
-        });
-    })
-  }
-
-  registrarUsuario(usuario: Usuario) : Promise<Session> {
-    return new Promise<Session>((resolve, reject) => {
-      this.http.post<Session>('/register', usuario).subscribe
+      this.http.post<Session>(url, usuario).subscribe
         (value => {
           resolve(value);
         }
@@ -35,12 +22,10 @@ export class UsuarioService {
         });
     })
   }
-
-
   private parseError(error: any): string {
     if (error.status = '404')
-      return 'Error en el servidor, intente nuevamente!'
+      return 'El servidor no se encuentra disponible!'
     else
-      return 'Error Desconocido!'
+      return 'Error en el servidor, intente nuevamente!'
   }
 }

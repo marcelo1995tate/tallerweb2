@@ -16,6 +16,7 @@ import { ControlMessagesComponent } from './shared/ControlMessage/ControlMessage
 
 import { ValidationService } from './Services/Validation.service';
 import { UsuarioService } from './Components/Usuario/Services/Usuario.service';
+import { RecPassComponent } from './Components/Usuario/RecPassword/RecPassword.component';
 
 @NgModule({
     declarations: [
@@ -25,7 +26,8 @@ import { UsuarioService } from './Components/Usuario/Services/Usuario.service';
         OrdersComponent,
         RegisterComponent,
         LoginComponent,
-        ControlMessagesComponent
+        ControlMessagesComponent,
+        RecPassComponent
     ],
     imports: [
         BrowserModule,
