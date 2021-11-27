@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
+import { SessionHandlerService } from 'src/app/Services/SessionHandler.service';
 
 @Component({
   selector: 'app-header',
@@ -18,18 +19,15 @@ export class HeaderComponent implements OnInit {
   }
 
   goToProductsPage(): void {
-    this.router.navigate(['/products'])
+    this.router.navigate(['/'])
   }
   
   cerrarSesion(){
-    console.log("adiosito");
+    SessionHandlerService.cleanSession();
+    this.router.navigate(['/'])
   }
 
   enSesion() : boolean {
-    const value = `; ${document.cookie}`;
-    const parts = value.split("; SSID=");
-
-    if (parts.length === 2) return true
-    return false
+    return SessionHandlerService.enSesion();
   }
 }

@@ -43,9 +43,7 @@ export class RecPassComponent {
   solicitarCambio() {
 
     let usuario: Usuario = this.recFormB.value;
-    //arreglar
-    console.log(usuario);
-    console.log(this.recFormA.value);
+    usuario.email = this.recFormA.get('email').value;
 
     this._usuarioService.gestionarSesion(usuario, environment.API_BASE_URL + '/cognito/confirmNewPassword').then((result) => {
       this.router.navigate(['/']);
