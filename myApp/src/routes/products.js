@@ -32,7 +32,7 @@ const validaciones ={
             let precio = parseInt(req.body.PRECIO, 10);
 
             if (req.body.NOMBRE == '' || req.body.NOMBRE == null) {
-                console.log(req.body.NOMBRE+'mideware')                
+                console.log(req.body.NOMBRE+' ---------------------mideware')                
                 console.log('----------------------nomb');
                 throw 'campos invalidos'
             }
