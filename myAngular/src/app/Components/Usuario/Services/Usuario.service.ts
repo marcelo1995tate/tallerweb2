@@ -1,5 +1,4 @@
 import { HttpClient } from "@angular/common/http";
-import { ParseError } from "@angular/compiler";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Session } from "../Interfaces/Session.interface";
