@@ -71,6 +71,7 @@ export class CartService {
         this.quantityProducts();
         this.calculateTotal();
         this.cartSubject.next(this.products);
+        
         localStorage.clear();
     }
 }
