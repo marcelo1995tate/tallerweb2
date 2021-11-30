@@ -25,49 +25,12 @@ const upload = multer({
         }
     }
 });
-const validaciones ={
 
-    validar: (req, res) => {
-        try {
-            let precio = parseInt(req.body.PRECIO, 10);
-
-            if (req.body.NOMBRE == '' || req.body.NOMBRE == null) {
-                console.log(req.body.NOMBRE+' ---------------------mideware')                
-                console.log('----------------------nomb');
-                throw 'campos invalidos'
-            }
-            if (req.body.DESCRIPCION == null || req.body.DESCRIPCION == '') {
-                console.log('----------------------desc');
-                throw 'campos invalidos'
-            }
-            if (req.body.CLASIFICACION == null || req.body.CLASIFICACION == '') {
-                console.log('----------------------clase');
-                throw 'campos invalidos'
-            }
-            if (precio == null || typeof (precio) != 'number' || isNaN(precio)) {
-                console.log('----------------------precio');
-                throw 'campos invalidos'
-            }
-            if (req.file.filename == null && req.file.filename == '') {
-                console.log('----------------------img');
-                throw 'campos invalidos'
-            }
-        }
-        catch {
-            res.send('CAMPOS INVALIDOS ')
-        }
-    }
-}
 const productsController = require('../controllers/productsController');
 
 /* GET users listing. */
 router.get('/mostar-todos', productsController.getAll);
 router.get('/mostar-producto/:id', productsController.getById);
-router.post('/create',validaciones.validar,  upload.single('images'),productsController.create);
-
-
-
-
-
+router.post('/create',upload.single('images'),productsController.create);
 
 module.exports = router;

@@ -11,7 +11,7 @@ const userPool = new AmazonCognitoIdentify.CognitoUserPool(poolData);
 exports.signIn = (req, res) => {
     try{
         let datos = req.body;
-        
+
         var authenticationDetails = new AmazonCognitoIdentify.AuthenticationDetails({
             Username: datos.email,
             Password: datos.password,
@@ -24,8 +24,8 @@ exports.signIn = (req, res) => {
 
         var cognitoUser = new AmazonCognitoIdentify.CognitoUser(userData);
         cognitoUser.authenticateUser(authenticationDetails, {
-            onSuccess: function (result){        
-                res.send(JSON.stringify(result.getIdToken().getJwtToken()));
+            onSuccess: function (result){   
+                res.send(JSON.stringify(userData.Username));
             },
             onFailure: function(err){
                 console.log(err);

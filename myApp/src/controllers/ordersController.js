@@ -1,12 +1,10 @@
 const db = require('../../database/models');
 const { QueryTypes } = require('sequelize');
 
-let idUsuario = 1;
-let productosComprados = [1, 2, 3]
 const controller = {
 
     create: (req, res) => {
-        db.Pedidos.create({ ID_USUARIO: idUsuario, FECHA: db.sequelize.fn('NOW')})
+        db.Pedidos.create({ ID_TOKEN: req.body.EMAIL, FECHA: db.sequelize.fn('NOW')})
             .then((resultados) => {
                 db.sequelize.query('SELECT max(`ID_PEDIDO`) FROM `pedido` AS `Pedidos` LIMIT 1;', {
                     type: QueryTypes.SELECT
@@ -14,8 +12,8 @@ const controller = {
                 return resultados.ID_PEDIDO
             })
             .then((idMax) => {
-                productosComprados.forEach(element => {
-                    db.Items_Pedidos.create({ ID_PEDIDO: idMax, ID_PRODUCTO: element })
+                req.body.productos.forEach(element => {
+                    db.Items_Pedidos.create({ ID_PEDIDO: idMax, ID_PRODUCTO: element.ID_PRODUCTO , CANTIDAD:element.CANTIDAD})
                 })
                 res.send();
             })

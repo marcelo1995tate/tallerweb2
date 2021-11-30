@@ -6,8 +6,8 @@ module.exports = (sequelize, dataTypes) => {
             primaryKey: true,
             autoIncrement: true        
         },
-        ID_USUARIO: {
-            type: dataTypes.INTEGER,
+        ID_TOKEN: {
+            type: dataTypes.STRING,
         },
         FECHA: {
             type: dataTypes.DATE,
