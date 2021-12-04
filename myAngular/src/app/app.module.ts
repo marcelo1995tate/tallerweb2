@@ -19,6 +19,7 @@ import { ValidationService } from './Services/Validation.service';
 import { UsuarioService } from './Components/Usuario/Services/Usuario.service';
 import { RecPassComponent } from './Components/Usuario/RecPassword/RecPassword.component';
 import { SessionHandlerService } from './Services/SessionHandler.service';
+import { AddProductComponent } from './Components/Productos/add-product/add-product.component';
 
 @NgModule({
     declarations: [
@@ -27,10 +28,12 @@ import { SessionHandlerService } from './Services/SessionHandler.service';
         FooterComponent,
         CartComponent,
         OrdersComponent,
+        AddProductComponent,
         RegisterComponent,
         LoginComponent,
         ControlMessagesComponent,
-        RecPassComponent
+        RecPassComponent,
+        AddProductComponent
     ],
     imports: [
         BrowserModule,
