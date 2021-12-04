@@ -18,7 +18,7 @@ export class AddProductComponent implements OnInit {
       nombre:['',[Validators.required,Validators.minLength(4)]],
       descripcion:['',[Validators.required,Validators.minLength(4)]],
       clasificacion:['',[Validators.required,Validators.minLength(4)]],
-      precio:['',[Validators.required,Validators.minLength(4)]]
+      precio:['',[Validators.required]]
     })
   }
 
