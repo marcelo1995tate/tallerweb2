@@ -49,7 +49,7 @@ exports.forgotPassword = (req , res) => {
         cognitoUser.forgotPassword({
             onSuccess: function(result) {
                 console.log('call result: ' + result);
-                return res.send(JSON.stringify("Fue enviado el codigo para el recupero de contraseña"));
+                return res.send(JSON.stringify({Message:"Fue enviado el codigo para el recupero de contraseña"}));
             },
             onFailure: function(err){
                 console.log(err);
@@ -59,7 +59,7 @@ exports.forgotPassword = (req , res) => {
         });
     }catch(error){
         console.log(error);
-        res.status(500).send('Hubo un error');
+        res.status(500).send(JSON.stringify({Message:"Hubo un error"}));
     }
 }
 
@@ -78,7 +78,7 @@ exports.confirmNewPassword = (req , res) => {
         cognitoUser.confirmPassword(datos.codigo , datos.password , {
             onSuccess: function(result){
                 console.log('call result: ' + result);
-                return res.send(JSON.stringify("Contraseña restablecida"));
+                return res.send(JSON.stringify({Message:"Contraseña restablecida"}));
     
             },
             onFailure: function(err){
@@ -88,7 +88,7 @@ exports.confirmNewPassword = (req , res) => {
         });
     }catch(error){
         console.log(error);
-        res.status(500).send('Hubo un error');
+        res.status(500).send(JSON.stringify({Message:"Hubo un error"}));
     }
 }
 
@@ -132,7 +132,7 @@ function apiCognitoSignUp(datos, res) {
 
     } catch (error) {
         console.log(error);
-        res.status(500).send('Hubo un error');
+        res.status(500).send(JSON.stringify({Message:"Hubo un error"}));
     }
 }
 
@@ -160,7 +160,7 @@ function apiCognitoSignIn(req, res) {
             },
         })
     } catch (error) {
-        res.status(500).send('Hubo un error');
+        res.status(500).send(JSON.stringify({Message:"Hubo un error"}));
     }
 }
 
