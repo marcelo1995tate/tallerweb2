@@ -30,13 +30,14 @@ export class LoginComponent {
     let usuario: Usuario = this.loginForm.value;
 
     this._usuarioService.gestionarSesion(usuario, environment.API_BASE_URL + '/cognito/sign-in').then((result) => {
-      if (result.IdToken.length == 0) {
+      console.log(result.Message)
+      if (result.IdToken == '') {
         this.mensajeLogin = result.Message
       }
       else {
-        document.cookie = `SSID=${result.IdToken}`;
+        document.cookie = `ID=${result.IdToken}`;
+        document.cookie = `Email=${result.Email}`;
         this.router.navigate(['/']);
-        console.log(result.IdToken.valueOf());
       }
 
     }, (error) => {

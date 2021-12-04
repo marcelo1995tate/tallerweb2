@@ -4,7 +4,7 @@ const { QueryTypes } = require('sequelize');
 const controller = {
 
     create: (req, res) => {
-        db.Pedidos.create({ ID_TOKEN: req.body.EMAIL, FECHA: db.sequelize.fn('NOW')})
+        db.Pedidos.create({ ID_TOKEN: req.body.email, FECHA: db.sequelize.fn('NOW')})
             .then((resultados) => {
                 db.sequelize.query('SELECT max(`ID_PEDIDO`) FROM `pedido` AS `Pedidos` LIMIT 1;', {
                     type: QueryTypes.SELECT
@@ -15,7 +15,10 @@ const controller = {
                 req.body.productos.forEach(element => {
                     db.Items_Pedidos.create({ ID_PEDIDO: idMax, ID_PRODUCTO: element.ID_PRODUCTO , CANTIDAD:element.CANTIDAD})
                 })
-                res.send();
+                res.send(JSON.stringify({mensaje: "Orden cargada correctamente"}));
+            })
+            .catch((error) => {
+                res.send(JSON.stringify({mensaje: "Fallo al cargar la orden"}));
             })
     },
 

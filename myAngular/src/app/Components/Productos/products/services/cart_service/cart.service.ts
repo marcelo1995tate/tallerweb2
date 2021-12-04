@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Product } from "../../interface/product.interface";
 import { BehaviorSubject, Observable } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { SessionHandlerService } from "src/app/Services/SessionHandler.service";
 
 
 @Injectable({
@@ -15,7 +17,7 @@ export class CartService {
     private totalSubject = new BehaviorSubject<number>(0);
     private quantitySubject = new BehaviorSubject<number>(0);
 
-    constructor() { this.reload() }
+    constructor(private _http : HttpClient) { this.reload() }
     get total$(): Observable<number> {
         return this.totalSubject.asObservable();
     }
@@ -66,12 +68,24 @@ export class CartService {
         this.totalSubject.next(total);
     }
 
-    comprar() {
-        this.products = []
-        this.quantityProducts();
-        this.calculateTotal();
-        this.cartSubject.next(this.products);
+    comprar() : Promise<string> {
+        var object = {
+            email: SessionHandlerService.getSesionMail(),
+            productos: this.products
+        }
+
+        return new Promise<string>((resolve, reject) => {
+            this._http.post<any>("http://localhost:3000/orders/create", object).subscribe((res) => {
+                this.products = []
+                localStorage.clear();
+                this.reload()
+                resolve(res.mensaje)
+            }, (error) =>{
+                resolve(error.mensaje)
+            } )
+        })
         
-        localStorage.clear();
+
+        
     }
 }

@@ -20,7 +20,7 @@ exports.signIn = (req, res) => {
     mensajeError = validarEmail(datos.email);
     mensajeError += validarPassword(datos.password); 
 
-    mensajeError != "" ? res.send(mensajeError) : apiCognitoSignIn(datos, res);
+    mensajeError != "" ? res.send(JSON.stringify({IdToken: '', Message: mensajeError})) : apiCognitoSignIn(datos, res);
 }
 
 exports.signUp = (req, res) => {
@@ -32,7 +32,7 @@ exports.signUp = (req, res) => {
     mensajeError += validarText(datos.apellido);
     mensajeError += validarAdress(datos.direccion);    
     
-    mensajeError != "" ? res.send(mensajeError) : apiCognitoSignUp(datos, res);
+    mensajeError != "" ? res.status(400).send(JSON.stringify({IdToken: '',Message: mensajeError})) : apiCognitoSignUp(datos, res);
     
 }
 
@@ -116,12 +116,18 @@ function apiCognitoSignUp(datos, res) {
         userPool.signUp(datos.email, datos.password, attributeList, null,
             function (err) {
                 if (err) {
-                    res.send(err.name);
-                    console.log(err);
+                    switch(err.name){
+                        case 'UsernameExistsException':
+                            res.status(400).send(JSON.stringify({Message: 'El mail se encuentra en uso'}));
+                            break;
+                        default:
+                            res.status(400).send(JSON.stringify({Message: 'Problemas con el servidor, intente nuevamente'}));
+                            break;
+                    }
+                    
                     return;
                 }
-                res.send(JSON.stringify('Te registraste correctamente, porfavor verifica tu correo'));
-                console.log("conexion correcta");
+                res.send(JSON.stringify({Message: 'Te registraste correctamente, porfavor verifica tu correo'}));
             });
 
     } catch (error) {
@@ -130,8 +136,10 @@ function apiCognitoSignUp(datos, res) {
     }
 }
 
-function apiCognitoSignIn(datos, res) {
+function apiCognitoSignIn(req, res) {
     try {
+        let datos = req;
+        
         var authenticationDetails = new AmazonCognitoIdentify.AuthenticationDetails({
             Username: datos.email,
             Password: datos.password,
@@ -144,16 +152,14 @@ function apiCognitoSignIn(datos, res) {
 
         var cognitoUser = new AmazonCognitoIdentify.CognitoUser(userData);
         cognitoUser.authenticateUser(authenticationDetails, {
-            onSuccess: function (result) {
-                res.send(JSON.stringify(userData.Username));
+            onSuccess: function (result){   
+                res.send(JSON.stringify({IdToken: result.getIdToken().getJwtToken(), Email: datos.email}));
             },
-            onFailure: function (err) {
-                console.log(err);
-                res.send(JSON.stringify(err.code + "." + err.message));
+            onFailure: function(err){
+                res.send(JSON.stringify({Message: err.code + "." + err.message, IdToken: ''}));
             },
-        });
+        })
     } catch (error) {
-        console.log(error);
         res.status(500).send('Hubo un error');
     }
 }

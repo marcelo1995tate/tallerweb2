@@ -12,6 +12,7 @@ import { CartService } from "../products/services/cart_service/cart.service";
 export class OrdersComponent {
 
   order: Product[] = [];
+  mensaje: string;
   total$ = this.cartService.total$;
   cart$ = this.cartService.cart$;
 
@@ -26,6 +27,11 @@ export class OrdersComponent {
   }
 
   comprar(){
-    this.cartService.comprar();
+    this.mensaje = "Cargando compra"
+    this.cartService.comprar().then((result) => {
+      this.mensaje = result
+    }, (error) => {
+      this.mensaje = error
+    });
   }
 }
