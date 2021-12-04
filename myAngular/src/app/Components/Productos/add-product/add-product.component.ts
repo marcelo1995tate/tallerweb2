@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {AddProductService} from './add-product.service';
 import {Router} from '@angular/router';
+import { SessionHandlerService } from 'src/app/Services/SessionHandler.service';
 
 
 @Component({
@@ -23,6 +24,10 @@ export class AddProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (!SessionHandlerService.enSesion()){
+      this.router.navigate(['/login'])
+      return
+    }
   }
 
   crearProducto(){
