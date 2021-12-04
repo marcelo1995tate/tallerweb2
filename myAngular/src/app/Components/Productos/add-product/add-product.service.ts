@@ -14,6 +14,7 @@ export class AddProductService {
   }
 
   uploadFile(imagenParaSubir: File){
+  this.archivos= []
 	this.archivos.push(imagenParaSubir); 
   }
 

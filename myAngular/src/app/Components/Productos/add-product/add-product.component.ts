@@ -32,7 +32,9 @@ export class AddProductComponent implements OnInit {
 
   crearProducto(){
     this._service.postProduct(this.addProductForm).subscribe(	response => {
-      this.router.navigate(["/"])
+      setTimeout(()=>{                           
+        this.router.navigate(["/"])}, 500);
+      
     },
     error => {
       console.log(<any>error);
