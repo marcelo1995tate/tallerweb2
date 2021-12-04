@@ -1,5 +1,7 @@
 <div class="container mt-5 mb-5">
-    <h5>{{mensaje}}</h5>
+    
+    <p *ngIf="mensaje!=''" class="alert-info p-3">{{mensaje}}</p>
+
     <table class="table">
         <thead>
         <tr>

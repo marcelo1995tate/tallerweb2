@@ -81,7 +81,7 @@ export class CartService {
                 this.reload()
                 resolve(res.mensaje)
             }, (error) =>{
-                resolve(error.mensaje)
+                reject(error.error.mensaje)
             } )
         })
         
